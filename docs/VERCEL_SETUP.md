@@ -44,15 +44,25 @@ build, a corpus/sitemap generation pass, a full `tsc`, and the main Vite build.
 
 ### Node.js version
 
-The repo's `.nvmrc` pins **Node 24**. Vercel does **not** read `.nvmrc` for the
-build runtime — it reads `engines.node` in `package.json` (absent here) and then
-the project setting.
+`package.json` declares `"engines": { "node": ">=22.12.0" }`. That floor is not
+arbitrary — `blog-site/package.json`, which the root `postinstall` installs and
+`build:blog:raw` builds, already requires `>=22.12.0`, and without a root
+declaration Vercel had nothing to read (`.nvmrc`, which pins 24, is a local
+nvm/CI convention rather than a Vercel build input).
 
-**Set it explicitly:** Settings → General → **Node.js Version**.
+With `engines` declared, Vercel selects a matching supported Node version. If you
+want a specific one, set it in Settings → General → **Node.js Version** — choose
+22.x or higher.
 
-Pick the highest version your account offers, 22.x or above. If the build fails
-with a syntax error inside a dependency or a `node:` builtin import, the Node
-version is too old — raise it before investigating anything else.
+If a build fails with a syntax error inside a dependency or on a `node:` builtin
+import, the Node version is too old. Fix that before investigating anything else.
+
+### Do not set these
+
+| Variable | Why not |
+|---|---|
+| `NPM_CONFIG_PRODUCTION=true` | The entire build toolchain — `typescript`, `vite`, `tsx`, `cross-env` — lives in `devDependencies`. Skipping them fails the build at `tsc: not found`. |
+| `NPM_CONFIG_IGNORE_SCRIPTS=true` | Skips the root `postinstall`, so `blog-site/` is never installed and `build:blog:raw` fails. |
 
 ---
 
