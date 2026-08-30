@@ -78,19 +78,45 @@
 }
 
 /*
- * Mobile (<=768px) is handled by upstream's existing rules: `.logo` — and so
- * `.logo.bulgar-brand` — is hidden and `.logo-mobile` renders the single-line
+ * Mobile (<=768px): upstream hides `.logo` and shows `.logo-mobile` instead.
+ * That rule is `.logo { display: none }` (specificity 0,1,0), which the
+ * unscoped `.logo.bulgar-brand` rule above (0,2,0) outranks — so without this
+ * block BOTH marks render side by side on a phone. Restate the hide at the
+ * same breakpoint and at matching specificity.
+ */
+@media (max-width: 768px) {
+  .logo.bulgar-brand {
+    display: none;
+  }
+}
+
+/*
+ * Below 768px `.logo-mobile` renders the single-line
  * "Bulgar — World Monitor" mark instead. That element is height-constrained by
  * e2e/mobile-bottom-navigation.spec.ts (<= 24px), which is why the two-line
  * lockup deliberately does not follow it down to phone widths.
  */
 .logo-mobile {
-  max-width: 52vw;
+  max-width: 64vw;
   overflow: hidden;
   text-transform: uppercase;
   text-overflow: ellipsis;
   white-space: nowrap;
   letter-spacing: 1.2px;
+}
+
+/*
+ * "Bulgar — World Monitor" is 22 characters against upstream's 13-character
+ * "World Monitor", so at upstream's 14px/2px tracking it overflows a 390px
+ * viewport and ellipsises mid-word. Tighten the type on phones instead of
+ * letting the mark truncate — the secondary label is already hidden here, so
+ * this line is the whole brand.
+ */
+@media (max-width: 768px) {
+  .logo-mobile {
+    font-size: calc(11px * var(--wm-panel-effective-scale, 1));
+    letter-spacing: 0.5px;
+  }
 }
 
 /* Light theme: the muted grey secondary line needs more contrast on white. */

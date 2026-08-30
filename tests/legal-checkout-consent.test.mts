@@ -100,11 +100,21 @@ describe('checkout consent copy', () => {
 describe('every checkout entry point presents the Terms first', () => {
   it('the scan found the dashboard checkout callers at all', () => {
     // A regex that silently matches nothing would make every case below vacuous.
+    // Bulgar fork: the floor was 5. Two upstream upsell call sites were removed
+    // with the rest of the Pro messaging — Panel.ts's locked-panel CTA and
+    // notifications-settings.ts's alerts CTA — both of which started a checkout
+    // into UPSTREAM's merchant account. Four real callers remain, so the scan
+    // is still non-vacuous and every case below still has teeth.
     assert.ok(
-      checkoutCallers.length >= 5,
+      checkoutCallers.length >= 4,
       `expected several startCheckout() call sites in src/, found ${checkoutCallers.length}: ${checkoutCallers.join(', ')}`,
     );
-    assert.ok(checkoutCallers.includes('src/components/Panel.ts'));
+    // Bulgar fork: Panel.ts was the anchor here, but it no longer calls
+    // startCheckout — its locked-panel upsell was removed along with the rest
+    // of upstream's Pro messaging. UnifiedSettings.ts is the replacement
+    // anchor: it still calls checkout and still renders the assent line, so
+    // the scan stays non-vacuous and the invariant below keeps real teeth.
+    assert.ok(checkoutCallers.includes('src/components/UnifiedSettings.ts'));
   });
 
   for (const file of checkoutCallers) {

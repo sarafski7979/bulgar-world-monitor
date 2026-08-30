@@ -1541,7 +1541,7 @@ export class MapPopup {
           <div class="sector-pro-gate" data-gate="chokepoint-transit-chart" style="position:relative;overflow:hidden;border-radius:6px;margin-top:10px;min-height:120px;background:var(--surface-elevated, #111)">
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px">
               <span style="font-size:calc(16px * var(--wm-panel-effective-scale, 1))">🔒</span>
-              <span style="font-size:calc(10px * var(--wm-panel-effective-scale, 1));font-weight:600;opacity:.8">PRO</span>
+              <span style="font-size:calc(10px * var(--wm-panel-effective-scale, 1));font-weight:600;opacity:.8">Restricted</span>
               <span style="font-size:calc(9px * var(--wm-panel-effective-scale, 1));opacity:.5">Transit History</span>
             </div>
           </div>`;
@@ -1560,7 +1560,7 @@ export class MapPopup {
           <div class="sector-pro-gate" data-gate="chokepoint-sector-ring" style="position:relative;overflow:hidden;border-radius:6px;margin-top:10px;min-height:80px;background:var(--surface-elevated, #111)">
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px">
               <span style="font-size:calc(16px * var(--wm-panel-effective-scale, 1))">🔒</span>
-              <span style="font-size:calc(10px * var(--wm-panel-effective-scale, 1));font-weight:600;opacity:.8">PRO</span>
+              <span style="font-size:calc(10px * var(--wm-panel-effective-scale, 1));font-weight:600;opacity:.8">Restricted</span>
               <span style="font-size:calc(9px * var(--wm-panel-effective-scale, 1));opacity:.5">Sector Breakdown</span>
             </div>
           </div>`;

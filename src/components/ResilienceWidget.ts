@@ -2,8 +2,6 @@ import { type AuthSession, getAuthState, subscribeAuthState } from '@/services/a
 import { PanelGateReason, getPanelGateReason } from '@/services/panel-gating';
 import { getResilienceScore, type ResilienceDomain, type ResilienceScoreResponse } from '@/services/resilience';
 import { h, replaceChildren } from '@/utils/dom-utils';
-import { createCheckoutConsentElement } from '@/utils/legal-links';
-import { WEB_APP_ORIGIN } from '@/config/web-origin';
 import {
   type DimensionConfidence,
   LOCKED_PREVIEW,
@@ -196,42 +194,41 @@ export class ResilienceWidget {
   }
 
   private renderLocked(gateReason: PanelGateReason): HTMLElement {
-    const description = gateReason === PanelGateReason.ANONYMOUS
-      ? 'Sign in to unlock premium resilience scores.'
-      : 'Upgrade to Pro to unlock resilience scores.';
-    const cta = gateReason === PanelGateReason.ANONYMOUS ? 'Sign In' : 'Upgrade to Pro';
+    // Bulgar deployment: the anonymous branch is a real, working sign-in and is
+    // kept. The premium branch previously advertised upstream's Pro tier and
+    // fell back to opening worldmonitor.app/pro — removed, since this fork has
+    // no checkout. The gate is unchanged: a gated viewer still sees the blurred
+    // preview and no scores.
+    const isAnonymous = gateReason === PanelGateReason.ANONYMOUS;
+    const description = isAnonymous
+      ? 'Sign in to view resilience scores.'
+      : 'Resilience scores are not enabled in this deployment.';
 
     const preview = this.renderScoreCard(LOCKED_PREVIEW, true);
     preview.classList.add('resilience-widget__preview');
 
-    const button = h('button', {
-      type: 'button',
-      className: 'panel-locked-cta resilience-widget__cta',
-      onclick: () => {
-        if (gateReason === PanelGateReason.ANONYMOUS) {
+    // Only the anonymous branch still has an action behind it. The upgrade
+    // branch has no destination on this fork, so it renders as a statement
+    // rather than a dead button. The checkout assent line goes with it: it
+    // existed solely to precede the Dodo merchant-of-record jump.
+    const button = isAnonymous
+      ? (h('button', {
+        type: 'button',
+        className: 'panel-locked-cta resilience-widget__cta',
+        onclick: () => {
           void import('@/services/clerk')
             .then((module) => module.openSignIn())
             .catch(() => this.showAuthUnavailable());
-          return;
-        }
-        void this.openUpgradeFlow().catch(() => {
-          window.open('https://worldmonitor.app/pro', '_blank', 'noopener,noreferrer');
-        });
-      },
-    }, cta) as HTMLButtonElement;
+        },
+      }, 'Sign In') as HTMLButtonElement)
+      : null;
 
     return h(
       'div',
       { className: 'cdp-card-body resilience-widget__locked' },
       preview,
       h('div', { className: 'panel-locked-desc resilience-widget__gate-desc' }, description),
-      // Assent above the CTA (#6976) — only on the upgrade branch. The
-      // ANONYMOUS branch opens Clerk sign-in, which carries its own Terms and
-      // Privacy links via the appearance layout options.
-      ...(gateReason === PanelGateReason.ANONYMOUS
-        ? []
-        : [createCheckoutConsentElement(WEB_APP_ORIGIN)]),
-      button,
+      ...(button ? [button] : []),
     );
   }
 
@@ -480,24 +477,5 @@ export class ResilienceWidget {
 
   private makeEmpty(text: string): HTMLElement {
     return h('div', { className: 'cdp-empty' }, text);
-  }
-
-  private async openUpgradeFlow(): Promise<void> {
-    const [{ DEFAULT_UPGRADE_PRODUCT }, { isDesktopRuntime }] = await Promise.all([
-      import('@/config/products'),
-      import('@/services/runtime'),
-    ]);
-
-    if (isDesktopRuntime()) {
-      const { openExternalUrl } = await import('@/services/external-navigation');
-      await openExternalUrl('https://worldmonitor.app/pro');
-      return;
-    }
-
-    await import('@/services/checkout')
-      .then((module) => module.startCheckout(DEFAULT_UPGRADE_PRODUCT))
-      .catch(() => {
-        window.open('https://worldmonitor.app/pro', '_blank', 'noopener,noreferrer');
-      });
   }
 }

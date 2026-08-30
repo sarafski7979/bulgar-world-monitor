@@ -3416,7 +3416,7 @@
     "previewComposingCopy": "Önizleme, en son canlı veriler ve pano stillemesiyle işleniyor.",
     "previewErrorCopy": "Sorunu düzeltin, ardından yeniden deneyin. Mevcut widget'larınız etkilenmez.",
     "createInteractive": "Etkileşimli Widget Oluştur",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO widget ajanı kullanılamıyor. Sunucudaki PRO_WIDGET_KEY kontrol edin.",
     "preflightInvalidProKey": "PRO anahtarı reddedildi. wm-pro-key'i güncelleyin ve yeniden yükleyin.",
     "preflightProSubscriptionRequired": "Pro aboneliği gerekli. Az önce yükseltildiyse sayfayı yenileyin; aksi takdirde desteğe başvurun.",

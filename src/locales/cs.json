@@ -3454,7 +3454,7 @@
     "previewComposingCopy": "Náhled se vykresluje s nejnovějšími živými daty a stylem nástěnky.",
     "previewErrorCopy": "Vyřešte problém a zkuste znovu. Vaše stávající widgety nejsou ovlivněny.",
     "createInteractive": "Vytvořit interaktivní widget",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "Agent PRO widgetu není dostupný. Zkontrolujte PRO_WIDGET_KEY na serveru.",
     "preflightInvalidProKey": "Klíč PRO odmítnut. Aktualizujte wm-pro-key a načtěte znovu.",
     "preflightProSubscriptionRequired": "Vyžaduje se předplatné Pro. Pokud jste se právě upgradovali, obnovte stránku; jinak se obraťte na podporu.",

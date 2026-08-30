@@ -3435,7 +3435,7 @@
     "previewComposingCopy": "L'aperçu s'affiche avec les dernières données en direct et le style du tableau de bord.",
     "previewErrorCopy": "Corrigez le problème, puis réessayez. Vos widgets existants ne sont pas affectés.",
     "createInteractive": "Créer un Widget Interactif",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "L'agent widget PRO est indisponible. Vérifiez PRO_WIDGET_KEY sur le serveur.",
     "preflightInvalidProKey": "Clé PRO rejetée. Mettez à jour wm-pro-key et rechargez.",
     "preflightProSubscriptionRequired": "Abonnement Pro requis. Si vous venez de vous mettre à niveau, actualisez la page ; sinon, contactez le support.",

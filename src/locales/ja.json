@@ -3397,7 +3397,7 @@
     "previewComposingCopy": "プレビューが最新のライブデータとダッシュボードスタイルでレンダリングされています。",
     "previewErrorCopy": "問題を修正して再試行してください。既存のウィジェットは影響を受けません。",
     "createInteractive": "インタラクティブウィジェットを作成",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PROウィジェットエージェントが利用できません。サーバーのPRO_WIDGET_KEYを確認してください。",
     "preflightInvalidProKey": "PROキーが拒否されました。wm-pro-keyを更新して再読み込みしてください。",
     "preflightProSubscriptionRequired": "Proサブスクリプションが必要です。アップグレード直後の場合はページを更新してください。それ以外の場合はサポートに連絡してください。",

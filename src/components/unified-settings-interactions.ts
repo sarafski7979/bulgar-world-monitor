@@ -64,7 +64,7 @@ export function getPanelToggleA11yState(
   if (locked) {
     return {
       ariaPressed: null,
-      ariaLabel: `Upgrade to Pro to use ${displayName}`,
+      ariaLabel: `${displayName} is not enabled in this deployment`,
     };
   }
   return {

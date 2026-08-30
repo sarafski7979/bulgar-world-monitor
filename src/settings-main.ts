@@ -269,11 +269,6 @@ function initOverviewListeners(area: HTMLElement): void {
     }
   });
 
-  area.querySelector('[data-wm-open-pro]')?.addEventListener('click', () => {
-    const url = 'https://worldmonitor.app/pro';
-    void openExternalUrl(url);
-  });
-
   area.querySelectorAll<HTMLButtonElement>('.settings-ov-cat[data-section]').forEach(btn => {
     btn.addEventListener('click', () => {
       const section = btn.dataset.section;

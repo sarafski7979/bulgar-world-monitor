@@ -3397,7 +3397,7 @@
     "previewComposingCopy": "预览正在使用最新的实时数据和仪表板样式进行呈现。",
     "previewErrorCopy": "修复问题后重试。您现有的小组件不受影响。",
     "createInteractive": "创建交互式小组件",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO 小组件代理不可用。请检查服务器上的 PRO_WIDGET_KEY。",
     "preflightInvalidProKey": "PRO 密钥被拒绝。请更新 wm-pro-key 并重新加载。",
     "preflightProSubscriptionRequired": "需要 Pro 订阅。如果您刚升级，请刷新页面；否则请联系支持。",

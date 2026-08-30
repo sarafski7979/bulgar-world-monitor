@@ -3454,7 +3454,7 @@
     "previewComposingCopy": "Предпросмотр отображается с последними живыми данными и стилизацией панели.",
     "previewErrorCopy": "Исправьте проблему и повторите попытку. Ваши существующие виджеты не затронуты.",
     "createInteractive": "Создать интерактивный виджет",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO агент виджетов недоступен. Проверьте PRO_WIDGET_KEY на сервере.",
     "preflightInvalidProKey": "PRO ключ отклонен. Обновите wm-pro-key и перезагрузите.",
     "preflightProSubscriptionRequired": "Требуется подписка Pro. Если вы недавно обновили подписку, обновите страницу; в противном случае обратитесь в поддержку.",

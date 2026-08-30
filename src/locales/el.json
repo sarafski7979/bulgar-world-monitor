@@ -3416,7 +3416,7 @@
     "previewComposingCopy": "Η προεπισκόπηση αποδίδεται με τα τελευταία ζωντανά δεδομένα και τη διαμόρφωση του πίνακα ελέγχου.",
     "previewErrorCopy": "Διορθώστε το πρόβλημα και δοκιμάστε ξανά. Τα υπάρχοντα widget δεν επηρεάζονται.",
     "createInteractive": "Δημιουργία Διαδραστικού Widget",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "Ο παράγοντας PRO widget είναι μη διαθέσιμος. Ελέγξτε PRO_WIDGET_KEY στον διακομιστή.",
     "preflightInvalidProKey": "Κλειδί PRO απορρίφθηκε. Ενημερώστε wm-pro-key και επαναφορτώστε.",
     "preflightProSubscriptionRequired": "Απαιτείται συνδρομή Pro. Εάν μόλις αναβαθμίστηκε, ανανεώστε τη σελίδα. διαφορετικά επικοινωνήστε με την υποστήριξη.",

@@ -3416,7 +3416,7 @@
     "previewComposingCopy": "Die Vorschau wird mit den neuesten Live-Daten und dem Dashboard-Styling gerendert.",
     "previewErrorCopy": "Beheben Sie das Problem und versuchen Sie es erneut. Ihre vorhandenen Widgets sind nicht betroffen.",
     "createInteractive": "Interaktives Widget erstellen",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO-Widget-Agent nicht verfügbar. Überprüfen Sie PRO_WIDGET_KEY auf dem Server.",
     "preflightInvalidProKey": "PRO-Schlüssel abgelehnt. Aktualisieren Sie wm-pro-key und laden Sie neu.",
     "preflightProSubscriptionRequired": "Pro-Abonnement erforderlich. Falls Sie gerade ein Upgrade durchgeführt haben, aktualisieren Sie die Seite. Wenden Sie sich andernfalls an den Support.",

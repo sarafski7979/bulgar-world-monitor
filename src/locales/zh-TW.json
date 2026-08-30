@@ -3397,7 +3397,7 @@
     "previewComposingCopy": "預覽正在使用最新的即時資料和儀表板樣式進行呈現。",
     "previewErrorCopy": "修復問題後重試。您現有的小工具不受影響。",
     "createInteractive": "建立互動式小工具",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO 小工具代理不可用。請檢查伺服器上的 PRO_WIDGET_KEY。",
     "preflightInvalidProKey": "PRO 金鑰被拒絕。請更新 wm-pro-key 並重新載入。",
     "preflightProSubscriptionRequired": "需要 Pro 訂閱。如果您剛升級，請重新整理頁面；否則請聯絡支援。",

@@ -50,7 +50,7 @@
     "previewComposingCopy": "Az előnézet a legújabb élő adatokkal és irányítópult stílust használva jelenik meg.",
     "previewErrorCopy": "Hárítsa el a problémát, majd próbálkozzon újra. Meglévő widgetjei érintetlen maradnak.",
     "createInteractive": "Interaktív widget létrehozása",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO widget ügynök nem érhető el. Ellenőrizze a PRO_WIDGET_KEY értéket a szerveren.",
     "preflightInvalidProKey": "PRO kulcs visszautasítva. Frissítse a wm-pro-key értéket és töltse újra az oldalt.",
     "preflightProSubscriptionRequired": "Pro előfizetés szükséges. Ha éppen frissített, frissítse az oldalt; egyéb esetben forduljon az ügyfélszolgálathoz.",

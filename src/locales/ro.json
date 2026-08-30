@@ -3435,7 +3435,7 @@
     "previewComposingCopy": "Previzualizarea se redă cu cele mai recente date live și stilul tabloului de bord.",
     "previewErrorCopy": "Remediază problema, apoi reîncearcă. Widgeturile existente nu sunt afectate.",
     "createInteractive": "Creează Widget Interactiv",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "Agentul widget PRO este indisponibil. Verifică PRO_WIDGET_KEY pe server.",
     "preflightInvalidProKey": "Cheia PRO respingă. Actualizează wm-pro-key și reîncarcă.",
     "preflightProSubscriptionRequired": "Abonament Pro necesar. Dacă tocmai ai upgrade-uit, reîmprospătează pagina; altfel contactează suportul.",

@@ -50,7 +50,7 @@
     "previewComposingCopy": "The preview is rendering with the latest live data and dashboard styling.",
     "previewErrorCopy": "Fix the issue, then retry. Your existing widgets are unaffected.",
     "createInteractive": "Create Interactive Widget",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO widget agent unavailable. Check PRO_WIDGET_KEY on the server.",
     "preflightInvalidProKey": "PRO key rejected. Update wm-pro-key and reload.",
     "preflightProSubscriptionRequired": "Pro subscription required. If you just upgraded, refresh the page; otherwise contact support.",

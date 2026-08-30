@@ -463,9 +463,15 @@ describe('pre-paint reservation honors entitlement hint', () => {
     return classes;
   }
 
-  it('reserves the banner strip for free visitors without a dismiss or hint', () => {
+  // Bulgar fork: this deployment does not sell upstream's Pro tier, so the
+  // pre-paint script no longer reserves a banner strip for anyone. Upstream
+  // asserted the opposite here. Inverted rather than deleted so that
+  // re-introducing the reservation — which would leave a permanent empty 40px
+  // band, since App.ts no longer mounts a banner to fill it — fails loudly.
+  // See src/config/bulgar-deployment.ts.
+  it('never reserves the banner strip, even for a free visitor', () => {
     const classes = runPrepaint({});
-    assert.ok(classes.has('wm-pro-banner-reserved'));
+    assert.equal(classes.has('wm-pro-banner-reserved'), false);
   });
 
   it('does not reserve when the entitlement hint says pro', () => {
@@ -544,14 +550,19 @@ describe('wiring contracts (#5728)', () => {
     assert.match(ret, /applyProBannerEntitlementHint\(localStorage, true\)/);
   });
 
-  it('pre-paint script and policy share the same hint key/value', () => {
+  // Bulgar fork: the pre-paint script no longer consults the entitlement hint,
+  // because it no longer decides whether to reserve a banner strip. The policy
+  // module still owns the key — it is untouched on this fork so its own unit
+  // tests and a future billing integration keep working — but the two are
+  // deliberately no longer coupled.
+  it('pre-paint script no longer reads the entitlement hint or reserves a strip', () => {
     const html = readFileSync(resolve(root, 'index.html'), 'utf-8');
     const script = html.match(/<script data-wm-prepaint>([\s\S]*?)<\/script>/)?.[1] ?? '';
-    assert.match(
-      script,
-      new RegExp(`localStorage\\.getItem\\('${PRO_BANNER_ENTITLEMENT_HINT_KEY}'\\)==='${PRO_BANNER_ENTITLEMENT_HINT_VALUE}'`),
-    );
-    assert.match(script, /!entitledHint\)document\.documentElement\.classList\.add\('wm-pro-banner-reserved'\)/);
+    assert.doesNotMatch(script, new RegExp(PRO_BANNER_ENTITLEMENT_HINT_KEY));
+    assert.doesNotMatch(script, /wm-pro-banner-reserved/);
+    // The policy module remains the single owner of the hint key/value.
+    const policy = readFileSync(resolve(root, 'src/services/pro-banner-policy.ts'), 'utf-8');
+    assert.match(policy, new RegExp(PRO_BANNER_ENTITLEMENT_HINT_KEY));
   });
 
   it('CSP script-src still pins the updated pre-paint script hash', () => {
