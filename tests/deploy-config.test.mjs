@@ -4277,13 +4277,16 @@ describe('section-scoped llms.txt files', () => {
 describe('skeleton brand text extraction (#5541)', () => {
   const indexHtml = readFileSync(resolve(__dirname, '../index.html'), 'utf-8');
 
-  it('.skeleton-brand raw textContent does not contain "WWorld"', () => {
+  it('.skeleton-brand raw textContent does not repeat the brand mark letter', () => {
     const match = indexHtml.match(/<div class="skeleton-brand">([\s\S]*?)<\/div>/);
     assert.ok(match, 'index.html must contain .skeleton-brand element');
     // Simulate raw textContent: strip all HTML tags
     const rawText = match[1].replace(/<[^>]+>/g, '');
-    assert.doesNotMatch(rawText, /WWorld/, 'skeleton-brand raw text must not concatenate as "WWorld Monitor"');
-    assert.match(rawText, /World Monitor/, 'skeleton-brand raw text must contain "World Monitor"');
+    // Bulgar fork: the mark letter is "B" and the wordmark is "Bulgar — World
+    // Monitor", so the #5541 failure mode reads "BBulgar" here rather than
+    // "WWorld". The invariant is unchanged — the mark must stay CSS-only.
+    assert.doesNotMatch(rawText, /BBulgar/, 'skeleton-brand raw text must not concatenate as "BBulgar — World Monitor"');
+    assert.match(rawText, /World Monitor/, 'skeleton-brand raw text must still name the upstream product');
   });
 
   it('.skeleton-brand-mark is aria-hidden and has no text content', () => {
@@ -4294,8 +4297,11 @@ describe('skeleton brand text extraction (#5541)', () => {
     assert.equal(markText, '', 'skeleton-brand-mark must have no text content (use CSS ::after instead)');
   });
 
-  it('.skeleton-brand-mark renders "W" via CSS content pseudo-element', () => {
-    assert.match(indexHtml, /\.skeleton-brand-mark::after\s*\{\s*content:\s*"W"\s*\}/, 'skeleton-brand-mark must render W via CSS ::after content');
+  it('.skeleton-brand-mark renders "B" via CSS content pseudo-element', () => {
+    // Bulgar fork: upstream's "W" mark became "B". The point of #5541 is that
+    // the letter lives in CSS `content` and never as a text node, which is what
+    // the sibling assertions above pin; only the glyph changed.
+    assert.match(indexHtml, /\.skeleton-brand-mark::after\s*\{\s*content:\s*"B"\s*\}/, 'skeleton-brand-mark must render B via CSS ::after content');
   });
 });
 

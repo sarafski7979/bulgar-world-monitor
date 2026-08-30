@@ -3,6 +3,9 @@
   "private": true,
   "version": "2.10.0",
   "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "allowScripts": {
     "@bufbuild/buf": true,
     "@vaadin/vaadin-usage-statistics": false,

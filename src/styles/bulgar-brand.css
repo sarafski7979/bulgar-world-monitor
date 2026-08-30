@@ -1,0 +1,103 @@
+/*
+ * BULGAR — WORLD MONITOR brand lockup.
+ *
+ * A compact two-line mark that replaces upstream's single "MONITOR" wordmark in
+ * the dashboard header. Deliberately narrow: the map is the hero, and the
+ * header is a dense control strip shared with the variant switcher, region
+ * select, mission preset, search and auth. Nothing here grows the header box or
+ * overlaps map controls.
+ *
+ * Text is authored in mixed case and uppercased with `text-transform` so screen
+ * readers pronounce "Bulgar" as a word rather than spelling it out.
+ *
+ * The element keeps upstream's `.logo` class so the existing mobile rule
+ * (`.logo { display: none }` under 768px, with `.logo-mobile` taking over)
+ * continues to apply unchanged.
+ */
+
+.logo.bulgar-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+
+  /* Reset the inherited single-line .logo typography; the children own it. */
+  font-size: inherit;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-height: 1;
+
+  /* Never let the lockup push the header's interactive controls off-screen. */
+  min-width: 0;
+  max-width: 46vw;
+}
+
+.bulgar-brand__primary,
+.bulgar-brand__secondary {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.bulgar-brand__primary {
+  color: var(--accent);
+  font-size: calc(13px * var(--wm-panel-effective-scale, 1));
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  line-height: 1.05;
+}
+
+.bulgar-brand__dash {
+  color: var(--text-ghost);
+  font-weight: 400;
+  /* The em dash carries no meaning for assistive tech; it is aria-hidden in the
+     markup and pulled tight here so the two words read as one lockup. */
+  margin: 0 1px;
+}
+
+.bulgar-brand__secondary {
+  color: var(--text-muted);
+  font-size: calc(8px * var(--wm-panel-effective-scale, 1));
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  line-height: 1.05;
+}
+
+/*
+ * Narrow desktop / tablet: the secondary label is the first thing to go. Losing
+ * it keeps the primary mark and every header control reachable rather than
+ * letting the lockup crowd the region selector and search.
+ */
+@media (max-width: 1100px) {
+  .bulgar-brand__secondary {
+    display: none;
+  }
+}
+
+/*
+ * Mobile (<=768px) is handled by upstream's existing rules: `.logo` — and so
+ * `.logo.bulgar-brand` — is hidden and `.logo-mobile` renders the single-line
+ * "Bulgar — World Monitor" mark instead. That element is height-constrained by
+ * e2e/mobile-bottom-navigation.spec.ts (<= 24px), which is why the two-line
+ * lockup deliberately does not follow it down to phone widths.
+ */
+.logo-mobile {
+  max-width: 52vw;
+  overflow: hidden;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 1.2px;
+}
+
+/* Light theme: the muted grey secondary line needs more contrast on white. */
+[data-theme='light'] .bulgar-brand__secondary {
+  color: #4b5563;
+}
+
+[data-theme='light'] .bulgar-brand__dash {
+  color: #9ca3af;
+}

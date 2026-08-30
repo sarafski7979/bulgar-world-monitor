@@ -1,6 +1,47 @@
-# World Monitor
+# BULGAR — WORLD MONITOR
+
+**FREE WORLD MAP MONITORING**
+
+> This repository is **Bulgar's deployment and customization** of the open-source
+> **World Monitor** project. It is *not* a new product and Bulgar did not create the
+> original World Monitor platform.
+>
+> **Upstream project:** [koala73/worldmonitor](https://github.com/koala73/worldmonitor) —
+> created and maintained by [@eliehabib](https://x.com/eliehabib).
+> **License:** AGPL-3.0-or-later (unchanged — see [LICENSE](LICENSE)).
+> **Hosting:** [Vercel](https://vercel.com) builds and serves this fork from GitHub.
+>
+> Everything below this block is upstream World Monitor documentation, kept intact.
+
+## What Bulgar changed
+
+| Area | Change |
+|------|--------|
+| Branding | Compact `BULGAR — WORLD MONITOR` / `FREE WORLD MAP MONITORING` lockup in the dashboard header, page title, and boot skeleton. Upstream author credit and the upstream GitHub link stay in the header. |
+| Deployment | Vercel-first: GitHub is the source of truth, Vercel runs the production build. See [`docs/VERCEL_SETUP.md`](docs/VERCEL_SETUP.md). |
+| Documentation | Added [`docs/VERCEL_SETUP.md`](docs/VERCEL_SETUP.md), [`docs/REALTIME_ARCHITECTURE.md`](docs/REALTIME_ARCHITECTURE.md), [`docs/RAILWAY_RELAY_SETUP.md`](docs/RAILWAY_RELAY_SETUP.md), and [`.env.minimum.example`](.env.minimum.example). |
+| Functionality | **None removed.** Every upstream data layer, API route, relay path, and integration is untouched. |
+
+No upstream feature was deleted, no live feed was replaced with mock data, and no
+copyright or attribution notice was removed.
+
+## Source availability (AGPL-3.0 §13)
+
+World Monitor is licensed **AGPL-3.0-or-later**. Because this modified version is
+deployed over a network, the AGPL requires that users interacting with it can obtain
+the **corresponding source of this modified version** — not just upstream's.
+
+Bulgar satisfies that obligation by publishing this repository, including every Bulgar
+modification, at the GitHub remote this fork is deployed from. The dashboard header
+retains a link to the upstream repository, and this README names the modified source.
+If you redeploy this fork, keep your modified source public too.
+
+---
 
 [简体中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
+
+## Upstream README
+
 
 **Real-time global intelligence dashboard** — AI-powered news aggregation, geopolitical monitoring, and infrastructure tracking in a unified situational awareness interface.
 
