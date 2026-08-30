@@ -69,6 +69,7 @@
     { "source": "/docs/:match*", "destination": "https://worldmonitor.mintlify.dev/docs/:match*" },
     { "source": "/", "has": [{ "type": "query", "key": "mode", "value": "agent" }], "destination": "/agent-view.json" },
     { "source": "/", "has": [{ "type": "host", "value": "^(?:www\\.)?worldmonitor\\.app$" }], "destination": "/pro/welcome.html" },
+    { "source": "/", "destination": "/dashboard" },
     { "source": "/index.md", "destination": "/home.md" },
     { "source": "/:mdPath((?!api/).+).md", "destination": "/api/md-twin?path=:mdPath" },
     { "source": "/pro", "destination": "/pro/index.html" },
