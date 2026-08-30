@@ -10083,9 +10083,6 @@
         },
         {
           "path": "src/services/runtime.ts"
-        },
-        {
-          "path": "src/settings-main.ts"
         }
       ]
     },
