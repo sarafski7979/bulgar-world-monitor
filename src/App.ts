@@ -110,6 +110,7 @@ import { isDesktopRuntime, waitForSidecarReady } from '@/services/runtime';
 import { hasPremiumAccess } from '@/services/panel-gating';
 import { BETA_MODE } from '@/config/beta';
 import { withBulgarBrand } from '@/config/bulgar-brand';
+import { BULGAR_OFFERS_UPSTREAM_PRO } from '@/config/bulgar-deployment';
 import { track, trackEvent, trackDeeplinkOpened, initAuthAnalytics, trackMapViewChange } from '@/services/analytics';
 import { preloadCountryGeometry, isCountryGeometryLoaded, getCountryNameByCode } from '@/services/country-geometry';
 import { initI18n, t, I18N_RESOURCES_LOADED_EVENT, type I18nResourcesLoadedDetail } from '@/services/i18n';
@@ -2493,7 +2494,10 @@ export class App {
     await this.panelLayout.init();
     markLcpDebug('wm:layout:init-complete');
     this.eventHandlers.setupSearchControls();
-    showProBanner(this.state.container);
+    // Bulgar does not sell upstream's Pro tier, so the upgrade promotion is
+    // never mounted here. ProBanner.ts itself is left intact — see
+    // src/config/bulgar-deployment.ts.
+    if (BULGAR_OFFERS_UPSTREAM_PRO) showProBanner(this.state.container);
     this.updateConnectivityUi();
     window.addEventListener('online', this.handleConnectivityChange);
     window.addEventListener('offline', this.handleConnectivityChange);
