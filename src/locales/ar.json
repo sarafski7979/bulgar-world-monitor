@@ -3492,7 +3492,7 @@
     "previewComposingCopy": "المعاينة تُرسّل مع أحدث البيانات الحية وأسلوب لوحة التحكم.",
     "previewErrorCopy": "صحّح المشكلة ثم أعد المحاولة. أدواتك الموجودة لم تتأثر.",
     "createInteractive": "إنشاء أداة تفاعلية",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "وكيل أداة PRO غير متاح. تحقق من PRO_WIDGET_KEY على الخادم.",
     "preflightInvalidProKey": "مفتاح PRO مرفوض. حدّث wm-pro-key وأعد التحميل.",
     "preflightProSubscriptionRequired": "مطلوب اشتراك Pro. إذا قمت بالترقية للتو، أعد تحميل الصفحة؛ وإلا اتصل بالدعم.",

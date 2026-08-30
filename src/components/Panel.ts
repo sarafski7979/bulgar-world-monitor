@@ -7,10 +7,7 @@ import { trackPanelResized } from '@/services/analytics';
 import { getAiFlowSettings } from '@/services/ai-flow-settings';
 import { getSecretState } from '@/services/runtime-config';
 import { PanelGateReason } from '@/services/panel-gating';
-import { openExternalUrl } from '@/services/external-navigation';
 import { lockSvg, upgradeSvg } from '@/components/gate-icons';
-import { createCheckoutConsentElement } from '@/utils/legal-links';
-import { WEB_APP_ORIGIN } from '@/config/web-origin';
 import { dataFreshness, type PanelFreshnessSummary } from '@/services/data-freshness';
 import { formatPanelFreshnessDisplay } from '@/services/panel-freshness-display';
 import {
@@ -1074,7 +1071,10 @@ export class Panel {
 
     const lockedChildren: (HTMLElement | string)[] = [
       iconEl,
-      h('div', { className: 'panel-locked-desc' }, t('premium.lockedDesc')),
+      // premium.lockedDesc ("Requires a World Monitor license key") is upstream's
+      // wording for a licence this deployment does not sell; the replacement
+      // sentence below states the same fact in Bulgar's voice. The key is left
+      // in the locale catalogues, unused, rather than retranslated in 29 files.
     ];
 
     if (features.length > 0) {
@@ -1085,25 +1085,23 @@ export class Panel {
       lockedChildren.push(featureList);
     }
 
-    // Assent immediately above the CTA (#6976). This button jumps straight to
-    // Dodo's hosted checkout, where Dodo (merchant of record) shows its terms
-    // and never ours — so ours are presented here, before the jump. The desktop
-    // branch below opens the /pro pricing page in the OS browser instead, and
-    // that page carries its own assent line above every tier CTA.
-    if (!isDesktopRuntime()) lockedChildren.push(createCheckoutConsentElement(WEB_APP_ORIGIN));
-    const ctaBtn = h('button', { type: 'button', className: 'panel-locked-cta' }, 'Upgrade to Pro');
-    if (isDesktopRuntime()) {
-      ctaBtn.addEventListener('click', () => {
-        void openExternalUrl('https://worldmonitor.app/pro');
-      });
-    } else {
-      ctaBtn.addEventListener('click', () => {
-        import('@/services/checkout').then(m => import('@/config/products').then(p => m.startCheckout(p.DEFAULT_UPGRADE_PRODUCT))).catch(() => {
-          window.open('https://worldmonitor.app/pro', '_blank', 'noopener,noreferrer');
-        });
-      });
-    }
-    lockedChildren.push(ctaBtn);
+    // Bulgar deployment: no checkout. Upstream pushed a CTA here that jumped
+    // to Dodo's hosted checkout (web) or opened worldmonitor.app/pro (desktop),
+    // which on this fork would have sent a visitor to pay UPSTREAM for a tier
+    // Bulgar neither sells nor can fulfil. Both destinations are removed, along
+    // with the Dodo merchant-of-record assent line that only existed to precede
+    // that jump.
+    //
+    // The gate itself is untouched: showLocked() is still called by exactly the
+    // same entitlement logic, the panel is still locked, and nothing here grants
+    // access. Only the upsell is gone, replaced by a plain statement of fact.
+    lockedChildren.push(h(
+      'div',
+      { className: 'panel-locked-desc panel-locked-unavailable' },
+      t('premium.notEnabledInDeployment', {
+        defaultValue: 'This feature is not enabled in this deployment.',
+      }),
+    ));
 
     this.replaceContent(h('div', { className: 'panel-locked-state' }, ...lockedChildren));
   }

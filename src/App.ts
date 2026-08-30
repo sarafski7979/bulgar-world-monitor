@@ -1,11 +1,9 @@
 import type { Monitor, PanelConfig, MapLayers } from '@/types';
-import { WEB_APP_ORIGIN } from '@/config/web-origin';
 import {
   isStockResearchPath,
   stockResearchSymbolFromPath,
 } from '@/features/stock-research/stock-research-route';
 import { openStockResearchOverlay } from '@/features/stock-research/stock-research-overlay';
-import { openExternalUrl } from '@/services/external-navigation';
 import { normalizeExclusiveChoropleths } from '@/components/resilience-choropleth-utils';
 import type { AppContext } from '@/app/app-context';
 import {
@@ -3276,11 +3274,10 @@ export class App {
 
     body.append(title, detail);
 
-    const action = document.createElement('button');
-    action.type = 'button';
-    action.className = 'update-toast-action';
-    action.dataset.action = 'upgrade';
-    action.textContent = 'Upgrade';
+    // Bulgar deployment: upstream offered an "Upgrade" button here that opened
+    // its /pro pricing page. The cap itself is unchanged — FREE_TIER_FOLLOW_LIMIT
+    // still applies and the same countries are still dropped; only the upsell
+    // is removed, so the toast now just states what happened.
 
     const dismiss = document.createElement('button');
     dismiss.type = 'button';
@@ -3289,7 +3286,7 @@ export class App {
     dismiss.setAttribute('aria-label', 'Dismiss');
     dismiss.textContent = '\u00d7';
 
-    toast.append(body, action, dismiss);
+    toast.append(body, dismiss);
 
     this.followedCountriesCapDropToastTimer = window.setTimeout(() => {
       toast.remove();
@@ -3300,9 +3297,8 @@ export class App {
         .closest<HTMLElement>('[data-action]')
         ?.dataset.action;
       if (clickedAction === 'upgrade') {
-        // Absolute + routed: the relative form resolved against
-        // tauri://localhost in the desktop WebView (#5911).
-        void openExternalUrl(`${WEB_APP_ORIGIN}/pro#pricing`);
+        // Retained only to dismiss any toast rendered before this build; the
+        // button is no longer created above.
         if (this.followedCountriesCapDropToastTimer !== null) {
           window.clearTimeout(this.followedCountriesCapDropToastTimer);
           this.followedCountriesCapDropToastTimer = null;

@@ -3416,7 +3416,7 @@
     "previewComposingCopy": "Förhandsvisningen renderas med de senaste livedata och instrumentpanelsstilen.",
     "previewErrorCopy": "Åtgärda problemet och försök sedan igen. Dina befintliga widgetar påverkas inte.",
     "createInteractive": "Skapa interaktiv widget",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO-widgetagent otillgänglig. Kontrollera PRO_WIDGET_KEY på servern.",
     "preflightInvalidProKey": "PRO-nyckel avvisad. Uppdatera wm-pro-key och ladda om.",
     "preflightProSubscriptionRequired": "Pro-prenumeration krävs. Om du precis uppgraderade bör du uppdatera sidan, annars kontaktar du support.",

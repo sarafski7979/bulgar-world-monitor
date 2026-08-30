@@ -3454,7 +3454,7 @@
     "previewComposingCopy": "Podgląd jest renderowany z najnowszymi danymi na żywo i stylowaniem tablicy.",
     "previewErrorCopy": "Napraw problem, a następnie spróbuj ponownie. Twoje istniejące widgety nie zostaną zmienione.",
     "createInteractive": "Utwórz interaktywny widget",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "Agent widgetu PRO niedostępny. Sprawdź PRO_WIDGET_KEY na serwerze.",
     "preflightInvalidProKey": "Klucz PRO odrzucony. Zaktualizuj wm-pro-key i przeładuj.",
     "preflightProSubscriptionRequired": "Wymagana subskrypcja Pro. Jeśli właśnie dokonałeś aktualizacji, odśwież stronę; w innym razie skontaktuj się z pomocą techniczną.",

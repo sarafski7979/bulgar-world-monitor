@@ -3416,7 +3416,7 @@
     "previewComposingCopy": "Преглед се визуализира с най-новите живи данни и оформление на табло.",
     "previewErrorCopy": "Поправи проблема, след което повтори. Твоите съществуващи уиджети не са засегнати.",
     "createInteractive": "Създай интерактивен уиджет",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO агент за уиджети недостъпен. Провери PRO_WIDGET_KEY на сървъра.",
     "preflightInvalidProKey": "PRO ключ отхвърлен. Актуализирай wm-pro-key и презареди.",
     "preflightProSubscriptionRequired": "Wymagana subskrypcja Pro. Ако щe си модернизирал, опресни страницата; в противен случай се свържи със поддръжка.",

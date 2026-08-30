@@ -3397,7 +3397,7 @@
     "previewComposingCopy": "미리보기가 최신 라이브 데이터와 대시보드 스타일링으로 렌더링되고 있습니다.",
     "previewErrorCopy": "문제를 해결한 후 다시 시도하세요. 기존 위젯은 영향을 받지 않습니다.",
     "createInteractive": "인터랙티브 위젯 생성",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO 위젯 에이전트를 사용할 수 없습니다. 서버의 PRO_WIDGET_KEY를 확인하세요.",
     "preflightInvalidProKey": "PRO 키가 거부되었습니다. wm-pro-key를 업데이트하고 다시 로드하세요.",
     "preflightProSubscriptionRequired": "Pro 구독이 필요합니다. 최근 업그레이드하신 경우 페이지를 새로고침하세요. 그 외에는 지원팀에 문의하세요.",

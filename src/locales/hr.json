@@ -51,7 +51,7 @@
     "previewComposingCopy": "Prikaz se prikazuje s najnovijim uživo podacima i stilizacijom nadzorne ploče.",
     "previewErrorCopy": "Ispravi problem, zatim pokušaj ponovno. Tvoji postojeći widgeti nisu na udaru.",
     "createInteractive": "Kreiraj interaktivni widget",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO widget agent nije dostupan. Provjeri PRO_WIDGET_KEY na serveru.",
     "preflightInvalidProKey": "PRO ključ odbijen. Ažuriraj wm-pro-key i ponovno učitaj.",
     "preflightProSubscriptionRequired": "Potrebna Pro pretplata. Ako si se upravo nadogradio, osvježi stranicu; inače kontaktiraj podršku.",

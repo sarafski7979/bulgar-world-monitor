@@ -53,10 +53,12 @@ export class MobilePanelNav {
     this.proPanelKeys = new Set(getProPanelKeys(settings, SITE_VARIANT));
     const categories = [
       { key: 'all', label: t('header.sourceRegionAll') },
-      // PRO right after All: one tap surfaces the whole premium suite —
-      // each panel renders its own unlock CTA (the mobile conversion path).
+      // Bulgar deployment: this chip is a real filter — one tap surfaces the
+      // gated panels — so it is kept and relabelled rather than removed. The
+      // upsell bolt is dropped; the panels it reveals no longer carry an
+      // unlock CTA, they state that the feature is not enabled here.
       ...(this.proPanelKeys.size > 0
-        ? [{ key: PRO_CATEGORY, label: `⚡ ${t('widgets.proBadge')}` }]
+        ? [{ key: PRO_CATEGORY, label: t('widgets.proBadge') }]
         : []),
       ...getVariantPanelCategories(settings, SITE_VARIANT)
         .map(({ key, labelKey }) => ({ key, label: t(labelKey) })),

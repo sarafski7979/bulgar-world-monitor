@@ -3435,7 +3435,7 @@
     "previewComposingCopy": "L'anteprima viene renderizzata con i dati live più recenti e lo stile del dashboard.",
     "previewErrorCopy": "Risolvi il problema e riprova. I tuoi widget esistenti non sono interessati.",
     "createInteractive": "Crea widget interattivo",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "Agente widget PRO non disponibile. Verifica PRO_WIDGET_KEY sul server.",
     "preflightInvalidProKey": "Chiave PRO rifiutata. Aggiorna wm-pro-key e ricarica.",
     "preflightProSubscriptionRequired": "Abbonamento Pro obbligatorio. Se hai appena effettuato l'upgrade, aggiorna la pagina; altrimenti contatta il supporto.",

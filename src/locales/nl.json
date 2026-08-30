@@ -3416,7 +3416,7 @@
     "previewComposingCopy": "Het voorbeeld wordt weergegeven met de nieuwste live-gegevens en dashboard-opmaak.",
     "previewErrorCopy": "Los het probleem op en probeer opnieuw. Je bestaande widgets worden niet beïnvloed.",
     "createInteractive": "Interactief Widget maken",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "PRO widget-agent niet beschikbaar. Controleer PRO_WIDGET_KEY op de server.",
     "preflightInvalidProKey": "PRO-sleutel afgewezen. Werk wm-pro-key bij en herlaad.",
     "preflightProSubscriptionRequired": "Pro-abonnement vereist. Als je zojuist hebt geüpgraded, vernieuw de pagina; anders neem contact op met support.",

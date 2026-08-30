@@ -1,7 +1,4 @@
-import { WEB_APP_ORIGIN } from '@/config/web-origin';
-import { openExternalUrl } from '@/services/external-navigation';
 import { escapeHtml } from '@/utils/sanitize';
-import { checkoutConsentHtml } from '@/utils/legal-links';
 import { renderSVG } from 'uqr';
 import {
   getChannelsData,
@@ -188,10 +185,12 @@ export function renderNotificationsSettings(host: NotificationsSettingsHost): No
   } else {
     html += `<div class="wm-pref-group-content wm-notif-tab-content">`;
     html += `<div class="ai-flow-toggle-desc">Get real-time intelligence alerts delivered to Telegram, Slack, Discord, and Email with configurable sensitivity, quiet hours, and digest scheduling.</div>`;
-    // Assent above the CTA (#6976) — this button starts checkout for a signed-in
-    // free user, so the Terms are presented before the jump to Dodo.
-    html += checkoutConsentHtml(WEB_APP_ORIGIN);
-    html += `<button type="button" class="panel-locked-cta" id="usNotifUpgradeBtn">Upgrade to Pro</button>`;
+    // Bulgar deployment: upstream started a Dodo checkout from here. Removed —
+    // it would have charged the visitor into UPSTREAM's merchant account. The
+    // Dodo merchant-of-record assent line goes with it, since there is no
+    // longer a checkout for it to precede. The feature remains gated exactly
+    // as before; only the upsell is gone.
+    html += `<div class="ai-flow-toggle-desc">This feature is not enabled in this deployment.</div>`;
     html += `</div>`;
   }
 
@@ -202,20 +201,12 @@ export function renderNotificationsSettings(host: NotificationsSettingsHost): No
       const { signal } = ac;
 
       if (!isPro) {
-        const upgradeBtn = container.querySelector<HTMLButtonElement>('#usNotifUpgradeBtn');
-        if (upgradeBtn) {
-          upgradeBtn.addEventListener('click', () => {
-            if (!host.isSignedIn) {
-              import('@/services/clerk').then(m => m.openSignIn()).catch(() => {
-                void openExternalUrl(`${WEB_APP_ORIGIN}/pro`);
-              });
-              return;
-            }
-            import('@/services/checkout').then(m => import('@/config/products').then(p => m.startCheckout(p.DEFAULT_UPGRADE_PRODUCT))).catch(() => {
-              void openExternalUrl(`${WEB_APP_ORIGIN}/pro`);
-            });
-          }, { signal });
-        }
+        // Bulgar deployment: the #usNotifUpgradeBtn CTA this wired up is gone
+        // (see the render branch above), and with it the sign-in-then-checkout
+        // path that ended at UPSTREAM's Dodo checkout / /pro page. Leaving the
+        // listener would keep this file a startCheckout() caller for a button
+        // that no longer exists. Gating is unchanged: non-Pro users still get
+        // the disabled branch and no notification settings.
         return () => ac.abort();
       }
 

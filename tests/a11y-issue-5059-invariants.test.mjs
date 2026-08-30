@@ -75,12 +75,16 @@ describe('panel toggles are real buttons', () => {
     );
   });
 
-  it('locked Pro panels are upgrade actions rather than false toggles', () => {
+  // Bulgar fork: the copy changed with the rest of the Pro messaging removal.
+  // The #5059 invariant is unchanged and is what this still guards — a locked
+  // control must NOT claim to be a toggle (aria-pressed omitted) and must carry
+  // an explanatory aria-label instead. Only the sentence differs.
+  it('locked panels are described, not presented as false toggles', () => {
     assert.deepEqual(
       getPanelToggleA11yState(true, false, 'Force posture'),
       {
         ariaPressed: null,
-        ariaLabel: 'Upgrade to Pro to use Force posture',
+        ariaLabel: 'Force posture is not enabled in this deployment',
       },
     );
     assert.match(

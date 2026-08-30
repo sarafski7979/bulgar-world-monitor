@@ -50,7 +50,7 @@
     "previewComposingCopy": "लाइव डेटा और डैशबोर्ड के स्टाइल के साथ पूर्वावलोकन बन रहा है।",
     "previewErrorCopy": "समस्या ठीक करें और फिर से कोशिश करें। आपके बाकी विजेट सुरक्षित हैं।",
     "createInteractive": "इंटरएक्टिव विजेट बनाएं",
-    "proBadge": "प्रो",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "प्रो विजेट एजेंट उपलब्ध नहीं है। सर्वर पर PRO_WIDGET_KEY जांचें।",
     "preflightInvalidProKey": "प्रो कुंजी अस्वीकृत। wm-pro-key अपडेट करें और पेज रीलोड करें।",
     "preflightProSubscriptionRequired": "प्रो सदस्यता चाहिए। अभी अपग्रेड किया है तो पेज रिफ्रेश करें, नहीं तो सपोर्ट से संपर्क करें।",

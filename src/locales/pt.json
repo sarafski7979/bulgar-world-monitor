@@ -3435,7 +3435,7 @@
     "previewComposingCopy": "A visualização está sendo renderizada com os dados ao vivo mais recentes e estilo do painel.",
     "previewErrorCopy": "Corrija o problema e tente novamente. Seus widgets existentes não serão afetados.",
     "createInteractive": "Criar Widget Interativo",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "Agente de widget PRO indisponível. Verifique PRO_WIDGET_KEY no servidor.",
     "preflightInvalidProKey": "Chave PRO rejeitada. Atualize wm-pro-key e recarregue.",
     "preflightProSubscriptionRequired": "Assinatura Pro necessária. Se você acabou de fazer upgrade, atualize a página; caso contrário, entre em contato com o suporte.",

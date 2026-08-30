@@ -46,9 +46,7 @@ import {
   FREE_TIER_FOLLOW_LIMIT,
   type FollowMutationResult,
 } from '@/services/followed-countries';
-import { WEB_APP_ORIGIN } from '@/config/web-origin';
 import { onEntitlementChange } from '@/services/entitlements';
-import { openExternalUrl } from '@/services/external-navigation';
 import { escapeHtml } from '@/utils/sanitize';
 import { setTrustedHtml, trustedHtml } from '@/utils/dom-utils';
 
@@ -97,16 +95,15 @@ export interface FollowButtonHandle {
 type UpgradeTrigger = (source: string) => void;
 
 /**
- * Last-resort upgrade destination when the lazy checkout path is
- * unavailable. Absolute, and routed through `openExternalUrl`: the bare
- * relative `/pro#pricing` this replaced resolved against `tauri://localhost`
- * in the desktop WebView, where no such route exists (#5911). Never throws —
- * every call site here is already a fallback.
+ * Bulgar deployment: upstream's last-resort upgrade destination
+ * (`WEB_APP_ORIGIN/pro#pricing`) is removed. This fork has no checkout, so
+ * every path that used to end at upstream's pricing page now ends here,
+ * doing nothing. Kept as a named no-op rather than deleted so the call sites
+ * below stay readable and a future Bulgar billing integration has one place
+ * to point at.
  */
 function openProPricingPage(): void {
-  void openExternalUrl(`${WEB_APP_ORIGIN}/pro#pricing`).catch(() => {
-    /* swallow — non-browser env, or the OS opener refused */
-  });
+  /* no destination on this deployment */
 }
 
 let _upgradeTrigger: UpgradeTrigger = (source) => {
@@ -123,24 +120,12 @@ let _upgradeTrigger: UpgradeTrigger = (source) => {
           return;
         }
       }
-      // Signed-in OR no openSignIn helper — go straight to checkout.
-      void import('@/services/checkout')
-        .then((checkout) =>
-          import('@/config/products').then((products) => {
-            const product = (products as { DEFAULT_UPGRADE_PRODUCT?: unknown })
-              .DEFAULT_UPGRADE_PRODUCT;
-            if (product && typeof checkout.startCheckout === 'function') {
-              checkout.startCheckout(
-                product as Parameters<typeof checkout.startCheckout>[0],
-              );
-            } else {
-              openProPricingPage();
-            }
-          }),
-        )
-        .catch(() => {
-          openProPricingPage();
-        });
+      // Bulgar deployment: upstream dropped signed-in users straight into
+      // Dodo checkout here. Removed — starting a checkout on this fork would
+      // charge the visitor into UPSTREAM's merchant account for a tier Bulgar
+      // does not sell. The anonymous sign-in path above is real and is kept.
+      // No entitlement changes: the follow cap still applies either way.
+      openProPricingPage();
     });
   } catch {
     try {

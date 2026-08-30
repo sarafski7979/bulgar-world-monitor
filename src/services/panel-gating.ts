@@ -148,7 +148,12 @@ export function resolveGateAction(reason: PanelGateReason, deps: GateActionDeps)
     case PanelGateReason.ANONYMOUS:
       return () => deps.openAuthModal();
     case PanelGateReason.FREE_TIER:
-      return () => openProPage('/pro');
+      // Bulgar deployment: upstream opened its /pro pricing page here. There is
+      // no Bulgar checkout, so the click has nowhere legitimate to go and must
+      // not send a visitor to pay upstream. The GATE ITSELF IS UNCHANGED —
+      // getPanelGateReason still returns FREE_TIER and the panel stays locked;
+      // only the upsell destination is gone.
+      return () => {};
     case PanelGateReason.PAYMENT_ON_HOLD:
     case PanelGateReason.RENEWAL_FAILED:
       // Pre-reserve the portal tab synchronously inside the click gesture

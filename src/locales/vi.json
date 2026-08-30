@@ -3397,7 +3397,7 @@
     "previewComposingCopy": "Bản xem trước đang hiển thị với dữ liệu trực tiếp mới nhất và kiểu bảng điều khiển.",
     "previewErrorCopy": "Khắc phục sự cố, sau đó thử lại. Các tiện ích hiện tại của bạn không bị ảnh hưởng.",
     "createInteractive": "Tạo tiện ích tương tác",
-    "proBadge": "PRO",
+    "proBadge": "Restricted",
     "preflightProUnavailable": "Đại lý tiện ích PRO không khả dụng. Kiểm tra PRO_WIDGET_KEY trên máy chủ.",
     "preflightInvalidProKey": "Khóa PRO bị từ chối. Cập nhật wm-pro-key và tải lại.",
     "preflightProSubscriptionRequired": "Yêu cầu đăng ký Pro. Nếu bạn vừa nâng cấp, hãy làm mới trang; nếu không, hãy liên hệ hỗ trợ.",
