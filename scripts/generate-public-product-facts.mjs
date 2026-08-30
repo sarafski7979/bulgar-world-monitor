@@ -182,7 +182,9 @@ function offerFor(plan) {
     price: priceText(plan.price),
     priceCurrency: plan.priceCurrency,
     availability: plan.availability,
-    url: plan.url,
+    // `url` deliberately omitted: every plan in the catalogue — including the
+    // free one — points at https://www.worldmonitor.app/pro#pricing, upstream's
+    // checkout for a tier Bulgar does not sell. schema.org does not require it.
     description: plan.description,
   };
   if (plan.billingDuration) {
@@ -222,7 +224,10 @@ function rewriteApplicationJsonLd(source, includedGroups) {
 }
 
 const applicationJsonLdGroups = new Map([
-  ['index.html', ['free', 'pro']],
+  // Bulgar deployment: free tier only. This generator rewrites index.html's
+  // WebApplication JSON-LD offers at prebuild time, which is why deleting them
+  // from index.html by hand did not stick — the build put them back.
+  ['index.html', ['free']],
   ['pro-test/welcome.html', ['free', 'pro']],
   ['pro-test/index.html', null],
 ]);

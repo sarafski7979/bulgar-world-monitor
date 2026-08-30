@@ -391,9 +391,15 @@ describe('crawlable content corpus deployment contracts', () => {
 
     const script = packageJson.scripts[scriptName];
     assert.ok(script, `vercel.json buildCommand names scripts["${scriptName}"], which does not exist`);
+    // Bulgar fork: INVERTED. Upstream required build:pro so the deploy shipped
+    // its /pro pricing page. This deployment must NOT ship it — /pro served
+    // upstream's checkout ($39.99/$359.99, Subscribe) from the Bulgar origin,
+    // reachable by URL even though nothing in the dashboard links to it.
+    // public/pro/ is gitignored, so dropping build:pro from the chain is what
+    // stops it deploying at all.
     assert.ok(
-      script.includes('npm run build:pro'),
-      `the deploy build command (${buildCommand}) must chain build:pro — public/pro/ is gitignored, so nothing else produces /pro`,
+      !script.includes('npm run build:pro'),
+      `the deploy build command (${buildCommand}) must NOT chain build:pro — Bulgar does not ship upstream's /pro pricing page`,
     );
     assert.ok(
       script.indexOf('npm run build:pro') < script.indexOf('vite build'),
@@ -428,13 +434,13 @@ describe('crawlable content corpus deployment contracts', () => {
         script.indexOf('npm run build:sitemap') < script.indexOf('vite build'),
         scriptName + ' must update public/sitemap.xml before Vite copies public/ into dist/'
       );
-      // public/pro/ is a BUILD PRODUCT, not committed bytes (#6898). Vercel's
-      // build command is `npm run build:full`, so if that chain stops running
-      // build:pro the deploy ships a dist/ with no /pro at all -- a 404 on the
-      // pricing page rather than the stale-bundle class this replaced.
+      // Bulgar fork: INVERTED, same reason as the guard above. public/pro/ is a
+      // BUILD PRODUCT, not committed bytes (#6898), so leaving build:pro out of
+      // the chain is exactly what makes /pro 404 on this deployment — which is
+      // the intended outcome here, not the regression it was upstream.
       assert.ok(
-        script.includes('npm run build:pro'),
-        scriptName + ' must build pro-test -- public/pro/ is gitignored, so nothing else produces /pro'
+        !script.includes('npm run build:pro'),
+        scriptName + ' must NOT build pro-test -- Bulgar does not ship upstream/pro'
       );
       // The ordering checks above only prove the STRING is chained. Without this,
       // build:pro could be rewritten to a no-op and every assertion here stays
