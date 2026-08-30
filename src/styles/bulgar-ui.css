@@ -272,3 +272,231 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.4px;
 }
+
+/* ============================================================
+   6 · Panel system
+   ============================================================ */
+
+/*
+ * Upstream panels are square-cornered blocks on --surface with a 1px
+ * --border. The retuned tokens above already soften them; this adds the
+ * shared geometry — radius, hairline top highlight, restrained shadow — so
+ * every panel reads as one system.
+ *
+ * `contain: content` and the existing transform/box-shadow transition are
+ * left exactly as upstream set them: they are load-bearing for the drag
+ * interaction and for the CLS work documented at main.css:1795.
+ */
+.panel {
+  border-radius: var(--bulgar-radius);
+  box-shadow: var(--bulgar-shadow);
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--bulgar-hairline) 30%, var(--bulgar-hairline) 70%, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.panel:hover {
+  border-color: var(--border-strong);
+}
+
+/* Panel headers: compact uppercase, per the type hierarchy in the brief. */
+.panel-title {
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   7 · Map chrome — quieter framing so the map carries the eye
+   ============================================================ */
+
+/*
+ * The brief asks for less framing around the map. The map section keeps its
+ * panel geometry but drops the shadow and highlight, so the map meets the
+ * page rather than sitting in a tray.
+ */
+.map-section.panel {
+  box-shadow: none;
+}
+
+.map-section.panel::before {
+  display: none;
+}
+
+/* Map control buttons (zoom, reset, 2D/3D, fullscreen) — consistent radius
+   and a real hover, replacing square hard-edged buttons. */
+.map-section button {
+  border-radius: var(--bulgar-radius-sm);
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.map-section button:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+/* Keyboard focus must stay obvious — the brief is explicit that styling
+   never costs accessibility. Applied to the shell only, so it does not
+   fight any component's own focus handling. */
+.header button:focus-visible,
+.map-section button:focus-visible,
+.layer-toggle:focus-visible {
+  outline: 2px solid var(--bulgar-green);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   8 · Layer toggles — compact switches
+   ============================================================ */
+
+/*
+ * These are upstream's real layer controls, bottom-left over the map. Every
+ * layer, every behaviour and every `.active` / `.auto-hidden` state class is
+ * preserved — this restyles them only.
+ *
+ * Off state stays dark neutral; on state is a restrained green wash rather
+ * than a bright neon outline, which is what the brief asks for when many
+ * layers are active at once.
+ */
+.layer-toggles:not(.deckgl-layer-toggles) .layer-toggle {
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: rgba(255, 255, 255, 0.025);
+  letter-spacing: 0.5px;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.layer-toggles:not(.deckgl-layer-toggles) .layer-toggle:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+.layer-toggles:not(.deckgl-layer-toggles) .layer-toggle.active {
+  background: var(--bulgar-green-dim);
+  border-color: var(--bulgar-green-line);
+}
+
+/* ============================================================
+   9 · Tooltips and popovers
+   ============================================================ */
+
+/*
+ * Restyle whatever tooltip surfaces exist rather than introducing a new one.
+ * Kept compact and close to the feature, per the brief.
+ */
+.map-tooltip,
+.deck-tooltip,
+.map-context-menu {
+  border-radius: var(--bulgar-radius-sm);
+  border: 1px solid var(--border-strong);
+  background: rgba(10, 13, 18, 0.94);
+  box-shadow: var(--bulgar-shadow);
+}
+
+/* ============================================================
+   10 · Responsive — panels give way to the map first
+   ============================================================ */
+
+/*
+ * Laptop: trim panel geometry so the map keeps its share of the viewport.
+ * The brand's secondary line is already hidden below 1100px by
+ * bulgar-brand.css.
+ */
+@media (max-width: 1280px) {
+  :root {
+    --bulgar-radius: 10px;
+  }
+}
+
+/*
+ * Phone: upstream already collapses to a single column with a bottom nav and
+ * drawer sheets, so panels are full-bleed here. Radius and shadow only add
+ * visual noise at that width, and the shadow costs paint on the weakest
+ * devices.
+ */
+@media (max-width: 768px) {
+  .panel {
+    border-radius: var(--bulgar-radius-sm);
+    box-shadow: none;
+  }
+
+  .panel::before {
+    display: none;
+  }
+
+  /* Larger hit area for the layer chips on touch, without changing the
+     control's behaviour or the layer set. */
+  .layer-toggles:not(.deckgl-layer-toggles) .layer-toggle {
+    padding: 5px 11px;
+  }
+}
+
+/* ============================================================
+   11 · Bottom status strip — real state only
+   ============================================================ */
+
+/*
+ * This is StatusPanel's existing container. It already renders genuine
+ * runtime state — digest coverage state, publisher count, items served, and
+ * feeds/categories completed over total, all computed by the app. Styling it
+ * as a proper low-profile status strip is the honest version of the brief's
+ * "bottom metrics bar".
+ *
+ * NOTHING is added here. Specifically NOT added, because the app exposes no
+ * such value and the brief forbids inventing one: sources-online counts,
+ * signal quality, uptime, data latency, encryption state, or per-layer
+ * entity totals with 24h deltas and sparklines. Every one of those in the
+ * reference mockups is fabricated.
+ */
+.status-panel-container {
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 70%), var(--bg-secondary);
+}
+
+.digest-coverage-row {
+  padding: 5px 12px;
+  color: var(--text-dim);
+  font-size: calc(10px * var(--wm-panel-effective-scale, 1));
+  letter-spacing: 0.3px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tricolour tick at the leading edge, tying the strip back to the mark. */
+.status-panel-container {
+  position: relative;
+}
+
+.status-panel-container::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 96px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--bulgar-silver) 0 33.3%,
+    var(--bulgar-green) 33.3% 66.6%,
+    var(--bulgar-red) 66.6% 100%
+  );
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/*
+ * Phones: upstream hides the status label (main.css ~14816) and shows the dot
+ * alone. The pill chrome added above would then render as an empty coloured
+ * lozenge, so strip it back to the bare dot at this width.
+ */
+@media (max-width: 768px) {
+  .status-indicator {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+}
