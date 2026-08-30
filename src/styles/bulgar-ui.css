@@ -1,0 +1,274 @@
+/*
+ * BULGAR — WORLD MONITOR · modern command-centre shell
+ * ====================================================
+ *
+ * A front-end-only visual layer. It changes no component structure, no data
+ * flow, and no API. It works by retuning the *chrome* design tokens that
+ * main.css already threads through every panel, so one edit propagates across
+ * the whole app instead of a component rewrite.
+ *
+ * WHAT THIS FILE DELIBERATELY DOES NOT TOUCH
+ *   --semantic-* / --threat-* / --defcon-* / --status-*  data colours. Their
+ *       meaning is the product. Aircraft, vessels, fires, quakes, weather,
+ *       conflicts and cyber events keep every colour upstream assigned them.
+ *   --map-bg / --map-grid / --map-country / --map-stroke  the map's own
+ *       palette. Restyling around the map is in scope; restyling the map is
+ *       not — it would change how the data reads.
+ *
+ * THEME SAFETY
+ *   main.css defines dark values on `:root` (line ~8) and light overrides on
+ *   `[data-theme="light"]` (line ~134). Both have specificity (0,1,0), so a
+ *   later plain `:root` block here would beat the light overrides and break
+ *   light mode. Everything dark below is therefore scoped to
+ *   `:root:not([data-theme='light'])`, which is mutually exclusive with the
+ *   light selector rather than competing with it.
+ */
+
+/* ============================================================
+   1 · Chrome tokens — deep graphite, cooler and quieter
+   ============================================================ */
+
+:root:not([data-theme='light']) {
+  /* Near-black with a faint blue-graphite cast rather than flat #0a0a0a.
+     Keeps the map's greens reading as the brightest thing on screen. */
+  --bg: #07090c;
+  --bg-secondary: #0b0e13;
+  --surface: #0f131a;
+  --surface-hover: #161b24;
+  --surface-active: #1a2130;
+
+  /* Thin, low-contrast rules. The old #2a2a2a read as a box; these read as
+     a seam between surfaces. */
+  --border: #1e242e;
+  --border-strong: #2c3441;
+  --border-subtle: #141922;
+
+  --panel-bg: #0f131a;
+  --panel-border: #1e242e;
+
+  --input-bg: #11161e;
+
+  --scrollbar-thumb: #232b36;
+  --scrollbar-thumb-hover: #38424f;
+
+  /* Slightly cooler text so it sits on the graphite rather than on brown. */
+  --text: #e6eaf0;
+  --text-secondary: #c3cad4;
+}
+
+/* ------------------------------------------------------------
+   Bulgar identity tokens.
+   Defined on :root for BOTH themes — the brand is not theme-dependent.
+   These are for branding, separators, active chrome and small status
+   accents ONLY. Never for data.
+   ------------------------------------------------------------ */
+:root {
+  /* Muted, not neon. --status-live (#44ff88) stays the "live" green; this is
+     the quieter institutional one used for chrome. */
+  --bulgar-green: #2f9e6a;
+  --bulgar-green-dim: rgba(47, 158, 106, 0.14);
+  --bulgar-green-line: rgba(47, 158, 106, 0.42);
+
+  --bulgar-silver: #ced5df;
+  --bulgar-silver-dim: rgba(206, 213, 223, 0.5);
+
+  /* Restrained. Never used for a data state — the semantic scale owns red. */
+  --bulgar-red: #c0413f;
+  --bulgar-red-line: rgba(192, 65, 63, 0.42);
+
+  /* Shared panel geometry so every surface agrees. */
+  --bulgar-radius: 12px;
+  --bulgar-radius-sm: 8px;
+  --bulgar-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+  --bulgar-hairline: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='light'] {
+  --bulgar-green: #1f7a4f;
+  --bulgar-silver: #4b5563;
+  --bulgar-silver-dim: rgba(75, 85, 99, 0.5);
+  --bulgar-red: #a8322f;
+  --bulgar-hairline: rgba(0, 0, 0, 0.06);
+  --bulgar-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px -14px rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================================
+   2 · Top command bar
+   ============================================================ */
+
+/*
+ * Dark glass strip. backdrop-filter is confined to this one 40px-tall
+ * element — the brief's performance rule. It is never applied to the map
+ * container or to any large scrolling surface.
+ */
+.header {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028) 0%, rgba(255, 255, 255, 0) 62%),
+    var(--bg-secondary);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.55);
+}
+
+@supports (backdrop-filter: blur(2px)) {
+  .header {
+    backdrop-filter: saturate(1.25) blur(8px);
+  }
+}
+
+/* The soft inner highlight along the top edge — the "embossed" cue, done
+   with a 1px pseudo-element instead of a border image. */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--bulgar-hairline) 18%,
+    rgba(255, 255, 255, 0.14) 50%,
+    var(--bulgar-hairline) 82%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ============================================================
+   3 · Brand lockup — engraved title on dark glass
+   ============================================================ */
+
+.logo.bulgar-brand {
+  position: relative;
+  gap: 2px;
+  margin-right: 2px;
+  padding: 4px 12px 4px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--bulgar-radius-sm);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(15, 19, 26, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/*
+ * Bulgarian tricolour as a 2px rule down the leading edge — white / green /
+ * red, top to bottom. Deliberately a hairline detail, not a field of colour:
+ * the brief asks for the flag as a refined accent, never dominant.
+ */
+.logo.bulgar-brand::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--bulgar-silver) 0 33.3%,
+    var(--bulgar-green) 33.3% 66.6%,
+    var(--bulgar-red) 66.6% 100%
+  );
+  opacity: 0.85;
+}
+
+/*
+ * "Engraved" primary. Two 1px text-shadows — a dark one below and a faint
+ * light one above — cut the letterforms into the surface. No image asset,
+ * no filter, no blur radius, so it costs nothing to paint.
+ */
+.bulgar-brand__primary {
+  color: var(--bulgar-silver);
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.85),
+    0 -1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.bulgar-brand__dash {
+  color: var(--bulgar-green);
+  opacity: 0.9;
+}
+
+.bulgar-brand__secondary {
+  color: var(--text-faint);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7);
+}
+
+[data-theme='light'] .bulgar-brand__primary {
+  color: #111827;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme='light'] .logo.bulgar-brand {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.7) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Version tag: quieter, so it reads as metadata beside the mark. */
+.version {
+  color: var(--text-ghost);
+  letter-spacing: 0.6px;
+}
+
+/* ============================================================
+   4 · Status indicator — real state only
+   ============================================================ */
+
+/*
+ * App.ts drives .status-indicator--cached / --unavailable from actual
+ * connectivity and bootstrap-hydration state. This only restyles the three
+ * states it already produces; no new state is invented, and nothing here
+ * makes the dot claim more than App.ts knows.
+ */
+.status-indicator {
+  gap: 5px;
+  padding: 2px 8px 2px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.status-indicator:not(.status-indicator--cached):not(.status-indicator--unavailable) {
+  border-color: var(--bulgar-green-line);
+  background: var(--bulgar-green-dim);
+  color: var(--status-live);
+}
+
+.status-indicator--cached {
+  border-color: rgba(255, 170, 0, 0.4);
+  background: rgba(255, 170, 0, 0.1);
+}
+
+.status-indicator--unavailable {
+  border-color: rgba(255, 68, 68, 0.4);
+  background: rgba(255, 68, 68, 0.1);
+}
+
+/* A slow, low-amplitude pulse. Upstream's keyframes stay; this only softens
+   the tempo so it reads as "alive", not as an alarm. */
+.status-indicator .status-dot {
+  animation-duration: 3.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-indicator .status-dot {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   5 · UTC clock
+   ============================================================ */
+
+.header-clock {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.4px;
+}
