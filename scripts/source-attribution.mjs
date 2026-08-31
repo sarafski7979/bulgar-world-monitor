@@ -760,6 +760,12 @@ const PROVIDER_OVERRIDES = {
     attribution: 'Excluded from the provider count: credentials placeholder.',
     status: 'excluded',
   },
+  'api.tomtom.com': {
+    provider: 'TomTom Traffic',
+    license: 'TomTom Developer terms (https://developer.tomtom.com/terms-and-conditions). Attribution is REQUIRED on any surface displaying the data, and redistribution/caching is limited by those terms — verify before extending the cache TTL or re-serving results.',
+    attribution: 'Traffic data \u00a9 TomTom. https://developer.tomtom.com',
+    status: 'terms-review',
+  },
   'api.worldmonitor.app': {
     provider: 'World Monitor hosted API',
     license: 'Excluded: World Monitor own service/control plane',
@@ -847,13 +853,13 @@ const PROVIDER_OVERRIDES = {
 // a provider-bearing override a separate, explicit lifecycle event instead of
 // something `--write` can silently normalize into the manifest.
 export const PROVIDER_IDENTITY_REVIEW = Object.freeze({
-  sha256: '824486c88b8da9a37f53719e4b8f870985b7176406a4b65b7fbbc1d19909d7a2',
-  reason: 'Group api.imd.gov.in, rsmcnewdelhi.imd.gov.in, and mausam.imd.gov.in as India Meteorological Department so cyclone and marine product attribution is one provider identity.',
+  sha256: '03f4fc3ebfbf06cd6c0af18a971c18277fae4b474b72af3d7336639cedad77a5',
+  reason: 'Bulgar deployment: register api.tomtom.com as the TomTom Traffic provider identity for the /api/traffic road-incident endpoint. TomTom Developer terms REQUIRE attribution wherever the data is displayed and constrain caching and redistribution, so the identity carries that obligation explicitly instead of the generic terms-review default. Previously: group api.imd.gov.in, rsmcnewdelhi.imd.gov.in and mausam.imd.gov.in as India Meteorological Department so cyclone and marine product attribution is one provider identity.',
   // A URL cited here is scanned like any other: this file sits inside
   // SOURCE_ROOTS, so citing a host that is not already a registered source
   // invents a provider row for it. The B.C. catalogue URLs above are safe
   // because that host is itself an observed source; parallel.ai is not.
-  reviewReference: 'Issue #7005 IMD cyclone/marine source-rights probe; plus Issues #7012 and #6682 Toronto safety sources; plus Issue #7000 publisher-centric source catalog; plus Issue #7001, Issue #6437, Issue #6622, Issue #6659, and PR #6447 identity reviews.',
+  reviewReference: 'Bulgar PR adding the TomTom traffic endpoint, attribution obligation reviewed against developer.tomtom.com terms; plus Issue #7005 IMD cyclone/marine source-rights probe; plus Issues #7012 and #6682 Toronto safety sources; plus Issue #7000 publisher-centric source catalog; plus Issue #7001, Issue #6437, Issue #6622, Issue #6659, and PR #6447 identity reviews.',
 });
 
 export function providerIdentityDigest(providerOverrides = PROVIDER_OVERRIDES) {
