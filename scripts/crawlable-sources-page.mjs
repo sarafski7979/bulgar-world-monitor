@@ -107,6 +107,10 @@ const SOURCE_DOMAIN_MATCHERS = [
 // Keep ambiguous structured providers explicit so a new unmatched provider
 // fails the build instead of silently becoming "geopolitics".
 const SOURCE_DOMAIN_OVERRIDES = new Map([
+  // Road-traffic incidents sit with the other network-status sources
+  // (power outages, internet outages, pipelines) rather than aviation:
+  // the signal is the state of physical ground infrastructure.
+  ['TomTom Traffic', 'infrastructure'],
   ['Alberta Emergency Alert', 'environment'],
   ['B.C. Evacuation Orders and Alerts', 'environment'],
   ['SaskAlert', 'environment'],
