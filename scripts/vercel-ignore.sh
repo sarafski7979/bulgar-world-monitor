@@ -3,6 +3,16 @@
 # Only build when web-relevant files change. Skip desktop, docs, scripts, CI, etc.
 
 # On main: skip if ONLY scripts/, docs/, .github/, or non-web files changed
+# A redeploy of the SAME commit is always deliberate: the only reasons to ask
+# for one are an environment-variable change or a cache-busting rebuild, and
+# neither produces a file diff. Without this, the path check below sees an
+# empty diff and cancels the build, so a newly-added env var can never take
+# effect — which is exactly what happened when UPSTASH_REDIS_* was first set.
+if [ -n "$VERCEL_GIT_PREVIOUS_SHA" ] && [ "$VERCEL_GIT_PREVIOUS_SHA" = "$VERCEL_GIT_COMMIT_SHA" ]; then
+  echo "Building: redeploy of the same commit (env change or forced rebuild)"
+  exit 1
+fi
+
 if [ "$VERCEL_GIT_COMMIT_REF" = "main" ] && [ -n "$VERCEL_GIT_PREVIOUS_SHA" ]; then
   git cat-file -e "$VERCEL_GIT_PREVIOUS_SHA" 2>/dev/null && {
     WEB_CHANGES=$(git diff --name-only "$VERCEL_GIT_PREVIOUS_SHA" HEAD -- \
