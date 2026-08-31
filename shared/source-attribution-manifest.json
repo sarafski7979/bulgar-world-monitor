@@ -1141,6 +1141,20 @@
       ]
     },
     {
+      "host": "api.tomtom.com",
+      "provider": "TomTom Traffic",
+      "kind": "structured",
+      "observed": true,
+      "license": "TomTom Developer terms (https://developer.tomtom.com/terms-and-conditions). Attribution is REQUIRED on any surface displaying the data, and redistribution/caching is limited by those terms — verify before extending the cache TTL or re-serving results.",
+      "attribution": "Traffic data © TomTom. https://developer.tomtom.com",
+      "status": "terms-review",
+      "references": [
+        {
+          "path": "api/traffic.js"
+        }
+      ]
+    },
+    {
       "host": "api.travelpayouts.com",
       "provider": "Travelpayouts flight-price data",
       "kind": "structured",
