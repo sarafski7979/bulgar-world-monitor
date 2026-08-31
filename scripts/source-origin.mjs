@@ -155,6 +155,7 @@ const HOST_ORIGINS = Object.freeze({
   'zerkalo.io': 'BY',
   'acleddata.com': 'US',
   'adsb.lol': 'NL',
+  'api.tomtom.com': 'NL',
   'api.adsb.lol': 'NL',
   'aerotime.aero': 'LT',
   'agentskills.io': 'US',
@@ -566,6 +567,8 @@ const HOST_ORIGINS = Object.freeze({
 // Provider-level overrides win when the host is a CDN, cloud, or shared
 // platform that would otherwise point at the wrong country.
 const PROVIDER_ORIGINS = Object.freeze({
+  // TomTom N.V. is headquartered in Amsterdam, Netherlands.
+  'TomTom Traffic': 'NL',
   'B.C. Evacuation Orders and Alerts': 'CA',
   'Toronto Police Service': 'CA',
   'Toronto Police Service Open Data': 'CA',
