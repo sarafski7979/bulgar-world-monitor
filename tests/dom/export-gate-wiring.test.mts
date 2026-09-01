@@ -155,14 +155,19 @@ describe('setupExportPanel — CTA routing through resolveGateAction', () => {
     expect(openSpy).not.toHaveBeenCalled();
   });
 
-  it('sends a free user to the pricing page', () => {
+  // Bulgar fork: INVERTED. The export CTA routes through resolveGateAction, and
+  // FREE_TIER no longer has a destination — Bulgar sells no Pro tier, so the
+  // click must not open upstream's checkout. The gate is untouched: the export
+  // stays locked for a free user, it just no longer advertises a way to pay
+  // someone else for it.
+  it('does not send a free user to upstream pricing', () => {
     verdict.mockReturnValue({ locked: true, reason: 'free_tier' });
     manager.setupExportPanel();
 
     trigger().click();
     cta().click();
 
-    expect(openSpy).toHaveBeenCalledWith(`${PRO_ORIGIN}/pro`, '_blank');
+    expect(openSpy).not.toHaveBeenCalled();
     expect(authModalOpen).not.toHaveBeenCalled();
   });
 
