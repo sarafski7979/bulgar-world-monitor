@@ -488,6 +488,13 @@
     },
 
     {
+      "path": "api/traffic.js",
+      "category": "upstream-proxy",
+      "reason": "TomTom traffic-incident proxy. The response is TomTom's own GeoJSON FeatureCollection shape, passed through so the client can hand it straight to a map layer; redefining it as proto would mean re-encoding a third-party payload we do not control and whose licence constrains redistribution. The endpoint exists to keep TOMTOM_API_KEY server-side and to cache in Redis, since TomTom bills per request and caps any bbox at 10,000 km2.",
+      "owner": "@sarafski7979",
+      "removal_issue": null
+    },
+    {
       "path": "api/opensky.js",
       "category": "upstream-proxy",
       "reason": "Desktop-product-only OpenSky relay. It requires the Tauri origin plus an enterprise product key and is not part of the public API offering.",

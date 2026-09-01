@@ -107,12 +107,15 @@ describe('resolveGateAction — ANONYMOUS', () => {
 });
 
 describe('resolveGateAction — FREE_TIER', () => {
-  it('opens the pricing page on an absolute origin, in a new tab, with noopener', () => {
+  // Bulgar fork: INVERTED. Upstream sent FREE_TIER to its /pro pricing page.
+  // Bulgar has no checkout, so that click would have sent a visitor to pay
+  // UPSTREAM for a tier this deployment cannot fulfil. The gate itself is
+  // unchanged — getPanelGateReason still returns FREE_TIER and the panel stays
+  // locked — only the destination is gone. Asserting the absence keeps it gone.
+  it('does not send a free user to upstream pricing', () => {
     act(PanelGateReason.FREE_TIER)();
 
-    // Absolute, because the desktop webview has no worldmonitor.app origin —
-    // a relative href there resolves against tauri://localhost.
-    expect(openSpy).toHaveBeenCalledWith(`${PRO_ORIGIN}/pro`, '_blank');
+    expect(openSpy).not.toHaveBeenCalled();
     expect(openAuthModal).not.toHaveBeenCalled();
   });
 });
@@ -202,16 +205,17 @@ describe('resolveGateAction — LAPSED', () => {
 });
 
 describe('resolveGateAction — desktop runtime (#5911)', () => {
-  it('sends the FREE_TIER upsell to the OS browser instead of another WebView', async () => {
+  // Bulgar fork: INVERTED, same reason as the FREE_TIER case above. The LAPSED
+  // and billing-state branches below still route to the OS browser, because
+  // those only reach a user who already has billing history upstream; it is the
+  // fresh free-tier upsell that Bulgar must not raise.
+  it('raises no FREE_TIER upsell at all on desktop', async () => {
     desktopRuntime = true;
 
     act(PanelGateReason.FREE_TIER)();
-    await vi.waitFor(() => expect(tauriInvocations.length).toBe(1));
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
-    expect(tauriInvocations[0]).toEqual({
-      command: 'open_url',
-      payload: { url: `${PRO_ORIGIN}/pro` },
-    });
+    expect(tauriInvocations).toHaveLength(0);
     expect(openSpy).not.toHaveBeenCalled();
   });
 
